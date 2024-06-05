@@ -1,4 +1,5 @@
 from graphics import Line, Point
+import time
 
 
 class Cell:
@@ -61,9 +62,14 @@ class Maze:
                                      self.__x1 + (i + 1) * self.__cell_size,
                                      self.__y1 + (j + 1) * self.__cell_size))
             self.__cells.append(row_list)
-        return self.__cells
 
     def draw(self, canvas, fill_color):
         for row in self.__cells:
             for cell in row:
                 cell.draw(canvas, fill_color)
+
+    def animate(self, canvas, fill_color):
+        for row in self.__cells:
+            for cell in row:
+                cell.draw(canvas, fill_color)
+                time.sleep(.05)

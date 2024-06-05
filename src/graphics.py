@@ -36,6 +36,9 @@ class Window:
     def draw_maze(self, maze, fill_color):
         maze.draw(self.__canvas, fill_color)
 
+    def animate_maze(self, maze, fill_color):
+        maze.animate(self.__canvas, fill_color)
+
 
 class Point:
     def __init__(self, x, y):
