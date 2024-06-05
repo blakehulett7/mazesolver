@@ -62,3 +62,8 @@ class Maze:
                                      self.__y1 + (j + 1) * self.__cell_size))
             self.__cells.append(row_list)
         return self.__cells
+
+    def draw(self, canvas, fill_color):
+        for row in self.__cells:
+            for cell in row:
+                cell.draw(canvas, fill_color)

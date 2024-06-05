@@ -33,6 +33,9 @@ class Window:
     def draw_cell_move(self, cell, to_cell, undo=False):
         cell.draw_move(self.__canvas, to_cell, undo)
 
+    def draw_maze(self, maze, fill_color):
+        maze.draw(self.__canvas, fill_color)
+
 
 class Point:
     def __init__(self, x, y):
