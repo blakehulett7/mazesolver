@@ -53,10 +53,12 @@ class Maze:
 
     def create_cells(self):
         self.__cells = []
-        top_row_list = []
-        for i in range(self.__columns):
-            top_row_list.append(Cell(self.__x1 + i * self.__cell_size,
-                                     self.__y1,
+        for j in range(self.__rows):
+            row_list = []
+            for i in range(self.__columns):
+                row_list.append(Cell(self.__x1 + i * self.__cell_size,
+                                     self.__y1 + j * self.__cell_size,
                                      self.__x1 + (i + 1) * self.__cell_size,
-                                     self.__y1 + self.__cell_size))
-        return top_row_list
+                                     self.__y1 + (j + 1) * self.__cell_size))
+            self.__cells.append(row_list)
+        return self.__cells
