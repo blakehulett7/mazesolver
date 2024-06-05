@@ -30,6 +30,9 @@ class Window:
     def draw_cell(self, cell, fill_color):
         cell.draw(self.__canvas, fill_color)
 
+    def draw_cell_move(self, cell, to_cell, undo=False):
+        cell.draw_move(self.__canvas, to_cell, undo)
+
 
 class Point:
     def __init__(self, x, y):
