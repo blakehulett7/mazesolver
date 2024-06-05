@@ -82,4 +82,5 @@ class Maze:
         for row in self.__cells:
             for cell in row:
                 cell.draw(fill_color)
+                self.__win.redraw()
                 time.sleep(.05)
