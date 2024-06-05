@@ -33,9 +33,8 @@ def main():
     for cell in cell_list:
         win.draw_cell(cell, "black")
 
-    test_line = Line(Point(cell_1.center_x, cell_1.center_y),
-                     Point(cell_2.center_x, cell_2.center_y))
-    win.draw_line(test_line, "red")
+    win.draw_cell_move(cell_1, cell_2)
+    win.draw_cell_move(cell_8, cell_7, True)
 
     win.wait_for_close()
 

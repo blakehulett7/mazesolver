@@ -34,6 +34,6 @@ class Cell:
             fill_color = "gray"
         else:
             fill_color = "red"
-        line = Line(Point(self.__center_x, self.__center_y),
-                    Point(to_cell.__center_x, to_cell.__center_y))
+        line = Line(Point(self.center_x, self.center_y),
+                    Point(to_cell.center_x, to_cell.center_y))
         line.draw(canvas, fill_color)
