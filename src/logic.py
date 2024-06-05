@@ -15,6 +15,9 @@ class Cell:
         self.has_right_wall = True
         self.has_bottom_wall = True
 
+    def __repr__(self):
+        return f"Cell with center at ({self.center_x}, {self.center_y})!"
+
     def draw(self, canvas, fill_color):
         if self.has_left_wall:
             Line(Point(self.__x1, self.__y1), Point(
@@ -37,3 +40,23 @@ class Cell:
         line = Line(Point(self.center_x, self.center_y),
                     Point(to_cell.center_x, to_cell.center_y))
         line.draw(canvas, fill_color)
+
+
+class Maze:
+    def __init__(self, x1, y1, rows, columns, cell_size):
+        self.__x1 = x1
+        self.__y1 = y1
+        self.__rows = rows
+        self.__columns = columns
+        self.__cell_size = cell_size
+        self.create_cells()
+
+    def create_cells(self):
+        self.__cells = []
+        top_row_list = []
+        for i in range(self.__columns):
+            top_row_list.append(Cell(self.__x1 + i * self.__cell_size,
+                                     self.__y1,
+                                     self.__x1 + (i + 1) * self.__cell_size,
+                                     self.__y1 + self.__cell_size))
+        return top_row_list
