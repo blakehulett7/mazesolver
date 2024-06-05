@@ -6,9 +6,9 @@ class Window:
         self.__root = Tk()
         self.__root.title = "FireMage Maze Solver"
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
-        self.__canvas = Canvas(self.__root, bg="white",
-                               width=width, height=height)
-        self.__canvas.pack(fill=BOTH, expand=1)
+        self.canvas = Canvas(self.__root, bg="white",
+                             width=width, height=height)
+        self.canvas.pack(fill=BOTH, expand=1)
         self.__running = False
 
     def redraw(self):
@@ -24,21 +24,6 @@ class Window:
     def close(self):
         self.__running = False
 
-    def draw_line(self, line, fill_color):
-        line.draw(self.__canvas, fill_color)
-
-    def draw_cell(self, cell, fill_color):
-        cell.draw(self.__canvas, fill_color)
-
-    def draw_cell_move(self, cell, to_cell, undo=False):
-        cell.draw_move(self.__canvas, to_cell, undo)
-
-    def draw_maze(self, maze, fill_color):
-        maze.draw(self.__canvas, fill_color)
-
-    def animate_maze(self, maze, fill_color):
-        maze.animate(self.__canvas, fill_color)
-
 
 class Point:
     def __init__(self, x, y):
@@ -47,11 +32,13 @@ class Point:
 
 
 class Line:
-    def __init__(self, point_1, point_2):
+    def __init__(self, point_1, point_2, window):
         self.__point_1 = point_1
         self.__point_2 = point_2
+        self.__win = window
 
-    def draw(self, canvas, fill_color):
-        canvas.create_line(self.__point_1.x, self.__point_1.y,
-                           self.__point_2.x, self.__point_2.y,
-                           fill=fill_color, width=2)
+    def draw(self, fill_color):
+        window = self.__win
+        window.canvas.create_line(self.__point_1.x, self.__point_1.y,
+                                  self.__point_2.x, self.__point_2.y,
+                                  fill=fill_color, width=2)
