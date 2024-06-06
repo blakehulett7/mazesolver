@@ -121,3 +121,19 @@ class Maze:
             y_index += 1
         x_index = self.cells[y_index].index(cell)
         cell.visited = True
+
+        to_visit = []
+
+        left_cell = None
+        top_cell = None
+        right_cell = None
+        bottom_cell = None
+        if x_index != 0:
+            left_cell = self.cells[y_index][x_index - 1]
+        if y_index != 0:
+            top_cell = self.cells[y_index - 1][x_index]
+        if x_index != self.__columns - 1:
+            right_cell = self.cells[y_index][x_index + 1]
+        if y_index != self.__rows - 1:
+            bottom_cell = self.cells[y_index + 1][x_index]
+        return left_cell, top_cell, right_cell, bottom_cell
