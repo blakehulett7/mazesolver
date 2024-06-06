@@ -1,4 +1,5 @@
 from graphics import Line, Point
+import random
 import time
 
 
@@ -18,6 +19,7 @@ class Cell:
         self.has_top_wall = True
         self.has_right_wall = True
         self.has_bottom_wall = True
+        self.visited = False
 
     def __repr__(self):
         return f"Cell with center at ({self.center_x}, {self.center_y})!"
@@ -68,7 +70,7 @@ class Cell:
 
 
 class Maze:
-    def __init__(self, x1, y1, rows, columns, cell_size, window):
+    def __init__(self, x1, y1, rows, columns, cell_size, window, seed=None):
         self.__x1 = x1
         self.__y1 = y1
         self.__win = window
@@ -76,6 +78,7 @@ class Maze:
         self.__columns = columns
         self.__cell_size = cell_size
         self.create_cells()
+        random.seed(seed)
 
     def create_cells(self):
         self.cells = []
@@ -88,6 +91,8 @@ class Maze:
                                      self.__y1 + (j + 1) * self.__cell_size,
                                      self.__win))
             self.cells.append(row_list)
+        self.entrance = self.cells[0][0]
+        self.exit = self.cells[-1][-1]
 
     def draw(self, fill_color):
         for row in self.cells:
@@ -102,10 +107,17 @@ class Maze:
                 time.sleep(.05)
 
     def break_entrance_and_exit(self):
-        entrance_cell = self.cells[0][0]
-        exit_cell = self.cells[-1][-1]
-        entrance_cell.has_top_wall = False
-        entrance_cell.draw("black")
+        self.entrance.has_top_wall = False
+        self.entrance.draw("black")
         time.sleep(.05)
-        exit_cell.has_bottom_wall = False
-        exit_cell.draw("black")
+        self.exit.has_bottom_wall = False
+        self.exit.draw("black")
+
+    def break_interior_walls(self, cell):
+        y_index = 0
+        for row in self.cells:
+            if cell in row:
+                break
+            y_index += 1
+        x_index = self.cells[y_index].index(cell)
+        cell.visited = True
