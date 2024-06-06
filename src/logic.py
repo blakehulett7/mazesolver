@@ -160,7 +160,7 @@ class Maze:
                 if self.__win:
                     cell.draw("black")
                     self.__win.redraw()
-                    time.sleep(.04)
+                    time.sleep(.03)
                 return
 
             chosen_cell = possible_visits[random.randrange(
@@ -219,7 +219,11 @@ class Maze:
 
         for to_cell in possible_cells:
             cell.draw_move(to_cell)
+            self.__win.redraw()
+            time.sleep(.04)
             if self.solver(to_cell):
                 return True
             to_cell.draw_move(cell, True)
+            self.__win.redraw()
+            time.sleep(.01)
         return False
