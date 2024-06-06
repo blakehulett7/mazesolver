@@ -128,6 +128,7 @@ class Maze:
         top_cell = None
         right_cell = None
         bottom_cell = None
+
         if x_index != 0:
             left_cell = self.cells[y_index][x_index - 1]
         if y_index != 0:
