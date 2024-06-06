@@ -62,7 +62,7 @@ class Maze:
         self.create_cells()
 
     def create_cells(self):
-        self.__cells = []
+        self.cells = []
         for j in range(self.__rows):
             row_list = []
             for i in range(self.__columns):
@@ -71,15 +71,15 @@ class Maze:
                                      self.__x1 + (i + 1) * self.__cell_size,
                                      self.__y1 + (j + 1) * self.__cell_size,
                                      self.__win))
-            self.__cells.append(row_list)
+            self.cells.append(row_list)
 
     def draw(self, fill_color):
-        for row in self.__cells:
+        for row in self.cells:
             for cell in row:
                 cell.draw(fill_color)
 
     def animate(self, fill_color):
-        for row in self.__cells:
+        for row in self.cells:
             for cell in row:
                 cell.draw(fill_color)
                 self.__win.redraw()
