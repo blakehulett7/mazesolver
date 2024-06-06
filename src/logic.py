@@ -104,14 +104,21 @@ class Maze:
             for cell in row:
                 cell.draw(fill_color)
                 self.__win.redraw()
-                time.sleep(.05)
+                time.sleep(.02)
+
+    def reset_visited(self):
+        for row in self.cells:
+            for cell in row:
+                cell.visited = False
 
     def break_entrance_and_exit(self):
         self.entrance.has_top_wall = False
-        self.entrance.draw("black")
+        if self.__win:
+            self.entrance.draw("black")
         time.sleep(.05)
         self.exit.has_bottom_wall = False
-        self.exit.draw("black")
+        if self.__win:
+            self.exit.draw("black")
 
     def break_interior_walls(self, cell):
         y_index = 0
@@ -150,9 +157,10 @@ class Maze:
                 possible_visits.append(bottom_cell)
 
             if possible_visits == []:
-                cell.draw("black")
-                self.__win.redraw()
-                time.sleep(.05)
+                if self.__win:
+                    cell.draw("black")
+                    self.__win.redraw()
+                    time.sleep(.04)
                 return
 
             chosen_cell = possible_visits[random.randrange(
@@ -172,3 +180,46 @@ class Maze:
                 chosen_cell.has_top_wall = False
 
             self.break_interior_walls(chosen_cell)
+
+    def solver(self, cell):
+        y_index = 0
+        for row in self.cells:
+            if cell in row:
+                break
+            y_index += 1
+        x_index = self.cells[y_index].index(cell)
+        cell.visited = True
+
+        if cell == self.exit:
+            return True
+
+        left_cell = None
+        top_cell = None
+        right_cell = None
+        bottom_cell = None
+
+        if x_index != 0:
+            left_cell = self.cells[y_index][x_index - 1]
+        if y_index != 0:
+            top_cell = self.cells[y_index - 1][x_index]
+        if x_index != self.__columns - 1:
+            right_cell = self.cells[y_index][x_index + 1]
+        if y_index != self.__rows - 1:
+            bottom_cell = self.cells[y_index + 1][x_index]
+
+        possible_cells = []
+        if left_cell and not cell.has_left_wall and not left_cell.visited:
+            possible_cells.append(left_cell)
+        if top_cell and not cell.has_top_wall and not top_cell.visited:
+            possible_cells.append(top_cell)
+        if right_cell and not cell.has_right_wall and not right_cell.visited:
+            possible_cells.append(right_cell)
+        if bottom_cell and not cell.has_bottom_wall and not bottom_cell.visited:
+            possible_cells.append(bottom_cell)
+
+        for to_cell in possible_cells:
+            cell.draw_move(to_cell)
+            if self.solver(to_cell):
+                return True
+            to_cell.draw_move(cell, True)
+        return False

@@ -24,6 +24,19 @@ class Tests(unittest.TestCase):
         self.assertFalse(m1_entrance.has_top_wall, "entrance not created")
         self.assertFalse(m1_exit.has_bottom_wall, "exit not created")
 
+    def test_maze_reset_visited(self):
+        m1 = Maze(50, 50, 12, 10, 10, None, 7)
+        m1.cells[0][0].visited = True
+        m1.reset_visited()
+        unvisited = True
+        for row in m1.cells:
+            for cell in row:
+                if cell.visited:
+                    unvisited = False
+        self.assertTrue(
+            unvisited,
+            "Reset unsuccessful, some cells still have the visited flag.")
+
 
 if __name__ == "__main__":
     unittest.main()
