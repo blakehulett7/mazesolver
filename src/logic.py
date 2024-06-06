@@ -151,6 +151,8 @@ class Maze:
 
             if possible_visits == []:
                 cell.draw("black")
+                self.__win.redraw()
+                time.sleep(.05)
                 return
 
             chosen_cell = possible_visits[random.randrange(
