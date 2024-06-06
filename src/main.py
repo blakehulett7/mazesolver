@@ -7,6 +7,7 @@ def main():
 
     test_maze = Maze(50, 50, 10, 14, 50, win)
     test_maze.animate("black")
+    test_maze.break_entrance_and_exit()
 
     win.wait_for_close()
 
