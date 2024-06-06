@@ -122,19 +122,51 @@ class Maze:
         x_index = self.cells[y_index].index(cell)
         cell.visited = True
 
-        to_visit = []
+        while True:
 
-        left_cell = None
-        top_cell = None
-        right_cell = None
-        bottom_cell = None
+            possible_visits = []
 
-        if x_index != 0:
-            left_cell = self.cells[y_index][x_index - 1]
-        if y_index != 0:
-            top_cell = self.cells[y_index - 1][x_index]
-        if x_index != self.__columns - 1:
-            right_cell = self.cells[y_index][x_index + 1]
-        if y_index != self.__rows - 1:
-            bottom_cell = self.cells[y_index + 1][x_index]
-        return left_cell, top_cell, right_cell, bottom_cell
+            left_cell = None
+            top_cell = None
+            right_cell = None
+            bottom_cell = None
+
+            if x_index != 0:
+                left_cell = self.cells[y_index][x_index - 1]
+            if y_index != 0:
+                top_cell = self.cells[y_index - 1][x_index]
+            if x_index != self.__columns - 1:
+                right_cell = self.cells[y_index][x_index + 1]
+            if y_index != self.__rows - 1:
+                bottom_cell = self.cells[y_index + 1][x_index]
+
+            if left_cell and not left_cell.visited:
+                possible_visits.append(left_cell)
+            if top_cell and not top_cell.visited:
+                possible_visits.append(top_cell)
+            if right_cell and not right_cell.visited:
+                possible_visits.append(right_cell)
+            if bottom_cell and not bottom_cell.visited:
+                possible_visits.append(bottom_cell)
+
+            if possible_visits == []:
+                cell.draw("black")
+                return
+
+            chosen_cell = possible_visits[random.randrange(
+                len(possible_visits))]
+
+            if chosen_cell == left_cell:
+                cell.has_left_wall = False
+                chosen_cell.has_right_wall = False
+            if chosen_cell == top_cell:
+                cell.has_top_wall = False
+                chosen_cell.has_bottom_wall = False
+            if chosen_cell == right_cell:
+                cell.has_right_wall = False
+                chosen_cell.has_left_wall = False
+            if chosen_cell == bottom_cell:
+                cell.has_bottom_wall = False
+                chosen_cell.has_top_wall = False
+
+            self.break_interior_walls(chosen_cell)
